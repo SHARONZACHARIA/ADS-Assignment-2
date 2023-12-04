@@ -11,10 +11,9 @@ def readDataset(dataUrl):
 
 
 genderdata = readDataset(dataUri)
-# print(genderdata.describe())
 print(genderdata.corr())
 
-"""  Applying Statistical Methods on  Expected years of schooling female"""
+"""   Statistical Analysis on Expected years of schooling female """
 
 year_of_schooling = genderdata.loc[genderdata['Indicator Code'] == 'SE.SCH.LIFE.FE']
 
@@ -28,7 +27,7 @@ stdev_gender_female = year_of_schooling ["1990"].std()
 print ('standard deviation',stdev_gender_female)
 
 
-"""  Applying Statistical Methods on  Expected years of schooling male """
+""" Statistical Analysis  on  Expected years of schooling male """
 
 year_of_schooling = genderdata.loc[genderdata['Indicator Code'] == 'SE.SCH.LIFE.MA']
 
@@ -40,3 +39,8 @@ print ('skewness',skew_gender_male)
 
 stdev_gender_male = year_of_schooling ["1990"].std()
 print ('standard deviation',stdev_gender_male)
+
+
+""" Data analysis using plots """
+
+print(genderdata.shape)
