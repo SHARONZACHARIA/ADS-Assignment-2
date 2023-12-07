@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 
 
 dataUri = 'DataSet/Gender_StatsData.csv'
+pivoted_data_uri = 'DataSet/PivotedDataset.csv'
 
 def getDataset(dataUrl):
     dataset = pd.read_csv(dataUrl)
@@ -54,62 +55,11 @@ countryMap={
     "ZA": "South Africa"
 }
 
-def remove_missing_features(df):
-    
-    if df is None:
-        print("No DataFrame received!")
-        return
-    
-    updated_df=df.copy()
-    print("Removed missing features for: " + updated_df.iloc[0]['Country Name'])
-    no_missing_vals=df.isnull().sum()
-    n_missing_index_list = list(no_missing_vals.index)
-    missing_percentage = no_missing_vals[no_missing_vals!=0]/df.shape[0]*100
-    cols_to_trim=[]
-    
-    
-    for i,val in enumerate(missing_percentage):
-        if val > 75:
-            cols_to_trim.append(n_missing_index_list[i])
 
 
-    if len(cols_to_trim) > 0:
-        updated_df=updated_df.drop(columns=cols_to_trim)
-        print("Dropped Columns:" + str(cols_to_trim))
-    else:
-        print("Nothing  dropped")
-    return updated_df
-
-
-
-def fill_missing_values(df):
-    
-    if df is None:
-        print("No DataFrame received")
-        return
-
-    df_cp=df.copy()
-    
-    # print("Filling missing features for: " + df_cp.iloc[0]['Country Name'])
-    
-    cols_list=list(df_cp.columns)
-    cols_list.pop()
-
-    df_cp.fillna(value=pd.np.nan, inplace=True)
-    
-    for col in cols_list:
-        df_cp[col].fillna((df_cp[col].mean()), inplace=True)
-
-    print("Filling missing values completed")
-    return df_cp
-
-
-
-updated_df = remove_missing_features(getDataset(dataUri))
-updated_df = fill_missing_values(updated_df)
-
-melted_df = updated_df.melt(id_vars=['Country Name', 'Country Code', 'Indicator Name', 'Indicator Code'], var_name='Year', value_name='Value')
+melted_df = getDataset(dataUri).melt(id_vars=['Country Name', 'Country Code', 'Indicator Name', 'Indicator Code'], var_name='Year', value_name='Value')
 
 # Pivot the table to have Indicator Names as columns
-pivoted_df = melted_df.pivot_table(index=['Country Name', 'Country Code', 'Year'], columns='Indicator Name', values='Value').reset_index()
-pivoted_df.to_csv('pivotted.csv')
+pivoted_df = melted_df.pivot_table(index=['Country Name', 'Country Code', 'Year'], columns='Indicator Code', values='Value').reset_index()
+pivoted_df.fillna()
+pivoted_df.to_csv('DataSet/PivotedDataset.csv')
