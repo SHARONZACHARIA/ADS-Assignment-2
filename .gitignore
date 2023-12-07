@@ -1,3 +1,4 @@
 *.pdf
 DataSet/*.csv
-
+*.ipynb
+.*csv
