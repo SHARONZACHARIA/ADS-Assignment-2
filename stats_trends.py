@@ -14,7 +14,7 @@ def getDataset(dataUrl):
 
 """ Defining Feature codes and country names to analyse """
 
-INDICATOR_CODES=['SP.POP.TOTL', 'SP.POP.TOTL.FE.IN', 'SP.POP.TOTL.MA.IN',
+COLUMN_CODES=[ 'Country Name','Country Code','Year','SP.POP.TOTL', 'SP.POP.TOTL.FE.IN', 'SP.POP.TOTL.MA.IN',
  'SP.DYN.CBRT.IN', 'SP.DYN.CDRT.IN',
  'SE.COM.DURS',
  'SL.IND.EMPL.ZS', 'SL.AGR.EMPL.ZS', 'SL.AGR.EMPL.FE.ZS', 'SL.IND.EMPL.FE.ZS', 'SL.UEM.TOTL.ZS',
@@ -35,7 +35,7 @@ featureMap={
     "SL.AGR.EMPL.FE.ZS": "Female Employment in Agriculture(%)",
     "SL.IND.EMPL.FE.ZS": "Female Employment in Industry(%)",
     "SL.UEM.TOTL.ZS": "Unemployment(%)",
-    "NY.GDP.MKTP.CD": "GDP in USD",
+    "NY.GDP.MKTP.CD": "GDP in USD", 
     "NY.ADJ.NNTY.PC.KD.ZG":"National Income per Capita",
     "NY.GSR.NFCY.CD":"Net income from Abroad",
     "NV.AGR.TOTL.CD":"Agriculture value added(in USD)",
@@ -56,10 +56,21 @@ countryMap={
 }
 
 
+# melting the dataset 
 
 melted_df = getDataset(dataUri).melt(id_vars=['Country Name', 'Country Code', 'Indicator Name', 'Indicator Code'], var_name='Year', value_name='Value')
 
 # Pivot the table to have Indicator Names as columns
 pivoted_df = melted_df.pivot_table(index=['Country Name', 'Country Code', 'Year'], columns='Indicator Code', values='Value').reset_index()
-pivoted_df.fillna()
-pivoted_df.to_csv('DataSet/PivotedDataset.csv')
+# pivoted_df.to_csv('DataSet/PivotedDataset.csv')
+
+
+
+filtered_columns = [col for col in pivoted_df.columns if col in COLUMN_CODES]
+df_filtered = pivoted_df[filtered_columns]
+
+
+#cleaning the transformed data set 
+# Fill missing values with the mean of the column
+df_filtered = df_filtered.fillna(df_filtered.mean())
+df_filtered.to_csv('Dataset/CleanedDataset.csv')
