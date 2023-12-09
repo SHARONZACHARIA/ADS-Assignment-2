@@ -19,8 +19,7 @@ COLUMN_CODES=[ 'Country Name','Country Code','Year','SP.POP.TOTL', 'SP.POP.TOTL.
  'SE.COM.DURS',
  'SL.IND.EMPL.ZS', 'SL.AGR.EMPL.ZS', 'SL.AGR.EMPL.FE.ZS', 'SL.IND.EMPL.FE.ZS', 'SL.UEM.TOTL.ZS',
  'NY.GDP.MKTP.CD',
- 'NY.ADJ.NNTY.PC.KD.ZG', 'NY.GSR.NFCY.CD', 'NV.AGR.TOTL.CD',
- 'EG.USE.ELEC.KH.PC', 'EG.FEC.RNEW.ZS', 'EG.USE.COMM.FO.ZS']
+ 'NY.ADJ.NNTY.PC.KD.ZG']
 
 
 featureMap={
@@ -36,13 +35,14 @@ featureMap={
     "SL.IND.EMPL.FE.ZS": "Female Employment in Industry(%)",
     "SL.UEM.TOTL.ZS": "Unemployment(%)",
     "NY.GDP.MKTP.CD": "GDP in USD", 
-    "NY.ADJ.NNTY.PC.KD.ZG":"National Income per Capita",
-    "NY.GSR.NFCY.CD":"Net income from Abroad",
-    "NV.AGR.TOTL.CD":"Agriculture value added(in USD)",
-    "EG.USE.ELEC.KH.PC":"Electric Power Consumption(kWH per capita)",
-    "EG.FEC.RNEW.ZS":"Renewable Energy Consumption (%)",
-    "EG.USE.COMM.FO.ZS":"Fossil Fuel Consumption (%)"
+    "NY.ADJ.NNTY.PC.KD.ZG":"National Income per Capita"
 }
+ # "NY.GSR.NFCY.CD":"Net income from Abroad",
+    # "NV.AGR.TOTL.CD":"Agriculture value added(in USD)",
+    # "EG.USE.ELEC.KH.PC":"Electric Power Consumption(kWH per capita)",
+    # "EG.FEC.RNEW.ZS":"Renewable Energy Consumption (%)",
+    # "EG.USE.COMM.FO.ZS":"Fossil Fuel Consumption (%)"
+
 
 
 countryMap={
