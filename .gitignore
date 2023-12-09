@@ -1,4 +1,3 @@
 *.pdf
-DataSet/*.csv
+DataSet/Gender_StatsData.csv
 *.ipynb
-.*csv
