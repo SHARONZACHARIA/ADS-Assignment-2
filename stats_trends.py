@@ -1,5 +1,6 @@
 import pandas as pd
 import numpy as np
+import seaborn as sns
 import matplotlib.pyplot as plt
 
 
@@ -37,12 +38,6 @@ featureMap={
     "NY.GDP.MKTP.CD": "GDP in USD", 
     "NY.ADJ.NNTY.PC.KD.ZG":"National Income per Capita"
 }
- # "NY.GSR.NFCY.CD":"Net income from Abroad",
-    # "NV.AGR.TOTL.CD":"Agriculture value added(in USD)",
-    # "EG.USE.ELEC.KH.PC":"Electric Power Consumption(kWH per capita)",
-    # "EG.FEC.RNEW.ZS":"Renewable Energy Consumption (%)",
-    # "EG.USE.COMM.FO.ZS":"Fossil Fuel Consumption (%)"
-
 
 
 countryMap={
@@ -57,14 +52,11 @@ countryMap={
 
 
 # melting the dataset 
-
 melted_df = getDataset(dataUri).melt(id_vars=['Country Name', 'Country Code', 'Indicator Name', 'Indicator Code'], var_name='Year', value_name='Value')
 
 # Pivot the table to have Indicator Names as columns
 pivoted_df = melted_df.pivot_table(index=['Country Name', 'Country Code', 'Year'], columns='Indicator Code', values='Value').reset_index()
 # pivoted_df.to_csv('DataSet/PivotedDataset.csv')
-
-
 
 filtered_columns = [col for col in pivoted_df.columns if col in COLUMN_CODES]
 df_filtered = pivoted_df[filtered_columns]
@@ -72,5 +64,16 @@ df_filtered = pivoted_df[filtered_columns]
 
 #cleaning the transformed data set 
 # Fill missing values with the mean of the column
-df_filtered = df_filtered.fillna(df_filtered.mean())
-df_filtered.to_csv('Dataset/CleanedDataset.csv')
+df_cleaned = df_filtered.fillna(df_filtered.mean())
+df_cleaned.to_csv('Dataset/CleanedDataset.csv')
+
+
+#Applying Statistical Methods on cleaned dataset
+copy_us_df_cleaned = df_cleaned.drop(['Year', 'Country Name'], axis='columns')
+print(copy_us_df_cleaned.describe())
+
+#Plotting co relation graphs
+fig, ax = plt.subplots(figsize=(10,10))
+sns.heatmap(copy_us_df_cleaned.corr(), cmap='RdBu', center=0,ax=ax)
+plt.savefig('correlation_us.png')
+plt.show()
