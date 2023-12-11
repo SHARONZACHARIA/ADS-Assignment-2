@@ -3,7 +3,6 @@ import numpy as np
 import seaborn as sns
 import matplotlib.pyplot as plt
 
-
 dataUri = 'DataSet/Gender_StatsData.csv'
 pivoted_data_uri = 'DataSet/PivotedDataset.csv'
 cleaned_data_uri = 'DataSet/CleanedDataset.csv'
@@ -38,7 +37,7 @@ featureMap = {
 }
 
 countryMap = {
-    "US": "USA",
+    "US": "United States",
     "IN": "India",
     "CHN": "China",
     "JP": "Japan",
@@ -46,7 +45,6 @@ countryMap = {
     "GBR": "United Kingdom",
     "ZAF": "South Africa"
 }
-
 
 # melting the dataset
 melted_df = getDataset(dataUri).melt(id_vars=[
@@ -117,10 +115,38 @@ pivoted_population_df.plot(kind='bar',x='Country Name',y=[1960, 1990, 2022])
 plt.xticks(rotation=30, horizontalalignment="center")
 plt.show()
 
-
 #line graphs 
-literacy_FE_India = cleaned_df[cleaned_df['Country Name']=="India"]
-literacy_FE_China = cleaned_df[cleaned_df['Country Name']=="China"]
-plt.plot(literacy_FE_China["Year"],literacy_FE_China["SE.ADT.1524.LT.FE.ZS"])
-plt.plot(literacy_FE_India["Year"],literacy_FE_India["SE.ADT.1524.LT.FE.ZS"])
+population_Gender_India = cleaned_df[cleaned_df['Country Name']=="India"] # Choose the column for the y-axis
+population_Gender_China = cleaned_df[cleaned_df['Country Name']=="China"]
+population_Gender_Usa = cleaned_df[cleaned_df['Country Name']=="United States"] # Choose the column for the y-axis
+population_Gender_Sa = cleaned_df[cleaned_df['Country Name']=="South Africa"]
+# Plotting
+# Plotting
+plt.figure(figsize=(8, 6)) 
+plt.xlabel("Year")
+plt.ylabel("Gender") # Adjust figure size if needed
+plt.plot(population_Gender_India["Year"], population_Gender_India["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
+plt.plot(population_Gender_India["Year"], population_Gender_India["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+plt.show()
+
+
+plt.figure(figsize=(8, 6)) 
+plt.xlabel("Year")
+plt.ylabel("Gender") # Adjust figure size if needed
+plt.plot(population_Gender_China["Year"], population_Gender_China["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
+plt.plot(population_Gender_China["Year"], population_Gender_China["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+plt.show()
+
+plt.figure(figsize=(8, 6)) 
+plt.xlabel("Year")
+plt.ylabel("Gender") # Adjust figure size if needed
+plt.plot(population_Gender_Usa["Year"], population_Gender_Usa["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
+plt.plot(population_Gender_Usa["Year"], population_Gender_Usa["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+plt.show()
+
+plt.figure(figsize=(8, 6)) 
+plt.xlabel("Year")
+plt.ylabel("Gender") # Adjust figure size if needed
+plt.plot(population_Gender_Sa["Year"], population_Gender_Sa["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
+plt.plot(population_Gender_Sa["Year"], population_Gender_Sa["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
 plt.show()
