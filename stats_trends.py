@@ -122,31 +122,35 @@ population_Gender_Usa = cleaned_df[cleaned_df['Country Name']=="United States"] 
 population_Gender_Sa = cleaned_df[cleaned_df['Country Name']=="South Africa"]
 # Plotting
 # Plotting
-plt.figure(figsize=(8, 6)) 
-plt.xlabel("Year")
-plt.ylabel("Gender") # Adjust figure size if needed
-plt.plot(population_Gender_India["Year"], population_Gender_India["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
-plt.plot(population_Gender_India["Year"], population_Gender_India["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+
+
+fig, axs = plt.subplots(3, 1, figsize=(8, 18))
+
+ 
+axs[0].plot(population_Gender_China["Year"], population_Gender_China["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
+axs[0].plot(population_Gender_China["Year"], population_Gender_China["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+
+
+axs[1].set_xlabel("Year")
+axs[1].set_ylabel("Gender") # Adjust figure size if needed
+axs[1].plot(population_Gender_Usa["Year"], population_Gender_Usa["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
+axs[1].plot(population_Gender_Usa["Year"], population_Gender_Usa["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+
+
+axs[2].set_xlabel("Year")
+axs[2].set_ylabel("Gender") # Adjust figure size if needed
+axs[2].plot(population_Gender_Sa["Year"], population_Gender_Sa["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
+axs[2].plot(population_Gender_Sa["Year"], population_Gender_Sa["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+
 plt.show()
 
+unemployment_India = cleaned_df[(cleaned_df['Country Name']=="India") & (cleaned_df['Year'] >= cleaned_df['Year'].max() - 9)]# Choose the column for the y-axis
+unemployment_Usa = cleaned_df[(cleaned_df['Country Name']=="United States") & (cleaned_df['Year'] >= cleaned_df['Year'].max() - 9)]# Choose the column for the y-axis
+unemployment_Sa = cleaned_df[(cleaned_df['Country Name']=="South Africa") & (cleaned_df['Year'] >= cleaned_df['Year'].max() - 9)]
 
-plt.figure(figsize=(8, 6)) 
-plt.xlabel("Year")
-plt.ylabel("Gender") # Adjust figure size if needed
-plt.plot(population_Gender_China["Year"], population_Gender_China["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
-plt.plot(population_Gender_China["Year"], population_Gender_China["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+plt.bar(unemployment_India["Year"],unemployment_India["SL.UEM.TOTL.ZS"])
 plt.show()
-
-plt.figure(figsize=(8, 6)) 
-plt.xlabel("Year")
-plt.ylabel("Gender") # Adjust figure size if needed
-plt.plot(population_Gender_Usa["Year"], population_Gender_Usa["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
-plt.plot(population_Gender_Usa["Year"], population_Gender_Usa["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+plt.bar(unemployment_Usa["Year"],unemployment_Usa["SL.UEM.TOTL.ZS"])
 plt.show()
-
-plt.figure(figsize=(8, 6)) 
-plt.xlabel("Year")
-plt.ylabel("Gender") # Adjust figure size if needed
-plt.plot(population_Gender_Sa["Year"], population_Gender_Sa["SP.POP.TOTL.FE.IN"], linestyle='-', color='g')
-plt.plot(population_Gender_Sa["Year"], population_Gender_Sa["SP.POP.TOTL.MA.IN"], linestyle='-', color='b')
+plt.bar(unemployment_Sa["Year"],unemployment_Sa["SL.UEM.TOTL.ZS"])
 plt.show()
