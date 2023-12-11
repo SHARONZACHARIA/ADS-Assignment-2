@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 dataUri = 'DataSet/Gender_StatsData.csv'
 pivoted_data_uri = 'DataSet/PivotedDataset.csv'
+cleaned_data_uri = 'DataSet/CleanedDataset.csv'
 
 
 def getDataset(dataUrl):
@@ -47,7 +48,7 @@ countryMap = {
     "JP": "Japan",
     "CA": "Canada",
     "GBR": "United Kingdom",
-    "ZA": "South Africa"
+    "ZAF": "South Africa"
 }
 
 
@@ -74,16 +75,49 @@ df_cleaned.to_csv('Dataset/CleanedDataset.csv')
 copy_df_cleaned = df_cleaned.drop(['Year', 'Country Name'], axis='columns')
 print(copy_df_cleaned.describe())
 
-# Plotting co-relation graphs
-fig, ax = plt.subplots(figsize=(10, 10))
 
 df_IND = df_cleaned[df_cleaned["Country Name"] == "India"]
 df_UK = df_cleaned[df_cleaned["Country Name"] == "United Kingdom"]
-df_CHN = df_cleaned[df_cleaned["Country Name"] == "China"]
+df_ZAF = df_cleaned[df_cleaned["Country Name"] == "South Africa"]
 
-sns.heatmap(df_UK.corr(), cmap='RdBu', center=0, ax=ax, annot=True) 
-# sns.heatmap(df_IND.corr(), cmap='RdBu', center=0, ax=ax)
-# sns.heatmap(df_CHN.corr(), cmap='RdBu', center=0, ax=ax)
+# Correlation Matrix and Heat map for India 
+correaltion_matrix_IND = df_IND.corr(numeric_only=True)
+correaltion_matrix_IND = correaltion_matrix_IND.rename(columns=featureMap)
+correaltion_matrix_IND = correaltion_matrix_IND.rename(index=featureMap)
+plt.figure(1,figsize=(10,10))
+heatmap_data = sns.heatmap(correaltion_matrix_IND , annot=True,fmt=".1g", vmax=1, vmin=0) 
+plt.title('Correlation Matrix for India')
+plt.show()
 
-# plt.savefig('correlation_us.png')
+# Correlation Matrix and Heat map for United Kingdom 
+correaltion_matrix_UK = df_UK.corr(numeric_only=True)
+correaltion_matrix_UK = correaltion_matrix_UK.rename(columns=featureMap)
+correaltion_matrix_UK = correaltion_matrix_UK.rename(index=featureMap)
+plt.figure(2,figsize=(10,10))
+heatmap_data = sns.heatmap(correaltion_matrix_UK , annot=True,fmt=".1g", vmax=1, vmin=0) 
+plt.title('Correlation Matrix for United Kingdom')
+plt.show()
+
+#Correlation Matrix and Heat map for South Africa
+correaltion_matrix_ZAF = df_ZAF.corr(numeric_only=True)
+correaltion_matrix_ZAF = correaltion_matrix_ZAF.rename(columns=featureMap)
+correaltion_matrix_ZAF = correaltion_matrix_ZAF.rename(index=featureMap)
+plt.figure(3,figsize=(10,10))
+heatmap_data = sns.heatmap(correaltion_matrix_ZAF , annot=True,fmt=".1g", vmax=1, vmin=0) 
+plt.title('Correlation Matrix for South Africa')
+plt.show()
+
+# bar graphs 
+# Filtering for India and China for the years 1960 and 2022
+df_population_by_year = pd.read_csv(cleaned_data_uri)
+
+filtered_population = df_population_by_year[
+    ((df_population_by_year['Country Name'] == 'India') | (df_population_by_year['Country Name'] == 'China') | 
+    (df_population_by_year['Country Name'] == 'United Kingdom') | (df_population_by_year['Country Name'] == 'South Africa')) &
+    ((df_population_by_year['Year'] == 1960) | (df_population_by_year['Year'] == 1990) | (df_population_by_year['Year'] == 2022))]
+
+filtered_population = filtered_population[["Country Name","Year","SP.POP.TOTL"]]
+ pivoted_population_df = filtered_population.pivot(index='Country Name', columns='Year', values='SP.POP.TOTL').reset_index()
+pivoted_population_df.plot(kind='bar',x='Country Name',y=[1960, 1990, 2022])
+plt.xticks(rotation=30, horizontalalignment="center")
 plt.show()
