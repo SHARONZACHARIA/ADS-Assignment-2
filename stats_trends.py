@@ -98,14 +98,21 @@ filtered_population = cleaned_df[
 population_Gender_China = cleaned_df[cleaned_df['Country Name']=="China"]
 population_Gender_Usa = cleaned_df[cleaned_df['Country Name']=="United States"]
 population_Gender_Sa = cleaned_df[cleaned_df['Country Name']=="South Africa"]
-
-
 filtered_population = filtered_population[["Country Name","Year","SP.POP.TOTL"]]
 years_to_plot = [1960, 1990, 2022]
 
 # Applying Statistical Methods on cleaned dataset
 copy_df_cleaned = df_cleaned.drop(['Year', 'Country Name'], axis='columns')
-print(copy_df_cleaned.describe())
+# describe method()
+stat_describe = copy_df_cleaned.describe()
+print(stat_describe)
+#skewness 
+skewness_gender_china = skew(population_Gender_China["SP.POP.TOTL"])
+print(f"skewnwss of chineese population data {skewness_gender_china}")
+#kurtosis
+kurtosis_gender_china = kurtosis(population_Gender_China["SP.POP.TOTL"])
+print(f"kurtosis of chineese population data{kurtosis_gender_china}")
+
 
 
 # Function to draw correlation heatmap
@@ -118,7 +125,7 @@ def drawCorrGraph(country_df, country_name):
     plt.title('Correlation HeatMap - ' + country_name)
     plt.show()
 
-
+#function to draw Bar graph
 def drawBar(df_col1 , df_col2 , country , color):
     plt.bar(df_col1,df_col2,color=color)
     plt.title("Unemployment Rate - " + country)
@@ -126,7 +133,7 @@ def drawBar(df_col1 , df_col2 , country , color):
     plt.ylabel("Unemployment Rate - ")
     plt.show()
 
-
+# Function to draw population Bar graph
 def draw_population_growth(population_data, years):
     filtered_population = population_data[["Country Name", "Year", "SP.POP.TOTL"]]
     pivoted_population_df = filtered_population.pivot(
@@ -139,8 +146,7 @@ def draw_population_growth(population_data, years):
     plt.legend(title='Year')
     plt.show()
 
-
-
+# Function to plot line graphs -1 
 def plot_birth_death_rates(country_data_list):
     num_countries = len(country_data_list)
     fig, axs = plt.subplots(num_countries, 1, figsize=(8, 6 * num_countries))
@@ -156,7 +162,7 @@ def plot_birth_death_rates(country_data_list):
     
     plt.show()
 
-
+# Function to plot line graphs -2
 def plot_population_by_gender(country_data_list):
     num_countries = len(country_data_list)
     fig, axs = plt.subplots(num_countries, 1, figsize=(8, 6 * num_countries))
@@ -173,11 +179,12 @@ def plot_population_by_gender(country_data_list):
     plt.show()
 
 
-drawCorrGraph(df_IND, " India")
-drawCorrGraph(df_ZAF, " South Africa")
-drawBar(unemployment_India["Year"],unemployment_India["SL.UEM.TOTL.ZS"],"India","#8E44AD")
-drawBar(unemployment_Usa["Year"],unemployment_Usa["SL.UEM.TOTL.ZS"],"USA","#F4D03F")
-drawBar(unemployment_Sa["Year"],unemployment_Sa["SL.UEM.TOTL.ZS"],"South Africa","#27AE60")
-draw_population_growth(filtered_population, years_to_plot)
-plot_birth_death_rates([population_Canada_BDRate,population_Japan_BDRate,population_UK_BDRate])
-plot_population_by_gender([population_Gender_China,population_Gender_Usa,population_Gender_Sa])
+# Function Calls 
+# drawCorrGraph(df_IND, " India")
+# drawCorrGraph(df_ZAF, " South Africa")
+# drawBar(unemployment_India["Year"],unemployment_India["SL.UEM.TOTL.ZS"],"India","#8E44AD")
+# drawBar(unemployment_Usa["Year"],unemployment_Usa["SL.UEM.TOTL.ZS"],"USA","#F4D03F")
+# drawBar(unemployment_Sa["Year"],unemployment_Sa["SL.UEM.TOTL.ZS"],"South Africa","#27AE60")
+# draw_population_growth(filtered_population, years_to_plot)
+# plot_birth_death_rates([population_Canada_BDRate,population_Japan_BDRate,population_UK_BDRate])
+# plot_population_by_gender([population_Gender_China,population_Gender_Usa,population_Gender_Sa])
