@@ -7,9 +7,9 @@ from scipy.stats import kurtosis
 
 # Paths to datasets
 # original world bank dataset can be found at https://genderdata.worldbank.org/
-Original_data_uri = 'DataSet/Gender_StatsData.csv'
-pivoted_data_uri = 'DataSet/PivotedDataset.csv'
-cleaned_data_uri = 'DataSet/CleanedDataset.csv'
+Original_data_uri = './DataSet/Gender_StatsData.csv'
+pivoted_data_uri = './DataSet/PivotedDataset.csv'
+cleaned_data_uri = './DataSet/CleanedDataset.csv'
 
 # Defining the column names as  a list  which will be used in cleaned data set for analysis
 COLUMN_CODES = ['Country Name', 'Country Code', 'Year', 'SP.POP.TOTL', 'SP.POP.TOTL.FE.IN', 'SP.POP.TOTL.MA.IN',
@@ -212,7 +212,7 @@ def plot_birth_death_rates(country_data_list):
                     linestyle='-', color='#A569BD', label='Birth Rate')
         axs[i].plot(country_data["Year"], country_data["SP.DYN.CDRT.IN"],
                     linestyle='-', color='b', label='Death Rate')
-        # Assuming a 'Country' column exists in the data
+        
         axs[i].set_title(f"Birth Death Rate - " + country_name[i])
         axs[i].legend()
 
@@ -240,7 +240,7 @@ def plot_population_by_gender(country_data_list):
                     linestyle='-', color='#A569BD', label='Female')
         axs[i].plot(country_data["Year"], country_data["SP.POP.TOTL.MA.IN"],
                     linestyle='-', color='b', label='Male')
-        # Assuming a 'Country' column exists in the data
+        
         axs[i].set_title(f"Population by Gender - " + country_name[i])
         axs[i].legend()
 
